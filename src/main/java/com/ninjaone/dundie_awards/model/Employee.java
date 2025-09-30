@@ -1,25 +1,31 @@
 package com.ninjaone.dundie_awards.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+//import jakarta.persistence.Index;
+//import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "employees")
+@Table(name = "employees", indexes= {
+    @Index(name = "unique_index", columnList="firstName, lastName", unique=true)
+})
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "first_name")
+//    @JsonProperty("first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(name = "dundie_awards")
     private Integer dundieAwards;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Organization organization;
 
     public Employee() {
