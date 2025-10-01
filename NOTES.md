@@ -10,6 +10,7 @@ TODO:
 ### README+Code Notes
 * Spring boot: 3.2.0
 * Spring core: 6.1.1
+* Thymeleaf: 3.2.0
 
 Spring components:
 * Controller+RequestMapping
@@ -23,6 +24,21 @@ Spring components:
 Spring startup workflow (starts at "DundieAwardsApplication.java")
 * Loads application context and configuration
 * Loads CommandLineRunner (DataLoader)
+
+Thyme syntax basics;
+```
+1. ${variable_name}
+2. #{calendars.format()} - Use for helper functions or 
+
+3. *{firstName} - Uses the currently selected object. If there is none, then it is ${}
+  <div th:object="${session.user}"> // In this context, the selected object is session.user
+    <p>Name: <span th:text="*{firstName}">Sebastian</span>.</p>  // This is the same as ${session.user.firstName}
+    <p>Surname: <span th:text="*{lastName}">Pepper</span>.</p>
+    <p>Nationality: <span th:text="*{nationality}">Saturn</span>.</p>
+  </div>
+  
+4. @{} - Link expressions allow for more flexible urls (https://www.thymeleaf.org/doc/articles/standardurlsyntax.html)
+```
 
 ### Code Improvements
 * Missing instructions on how to setup and run the application.
