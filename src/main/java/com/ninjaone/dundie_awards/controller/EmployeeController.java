@@ -67,8 +67,12 @@ public class EmployeeController {
         }
 
         Employee employee = optionalEmployee.get();
-        employee.setFirstName(employeeDetails.getFirstName());
-        employee.setLastName(employeeDetails.getLastName());
+        if (employeeDetails.getFirstName() != null) {
+          employee.setFirstName(employeeDetails.getFirstName());
+        }
+        if (employeeDetails.getLastName() != null) {
+          employee.setLastName(employeeDetails.getLastName());
+        }
 
         Employee updatedEmployee = employeeRepository.save(employee);
         return ResponseEntity.ok(updatedEmployee);

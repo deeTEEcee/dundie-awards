@@ -1,5 +1,9 @@
 TODO:
 1. Review Spring and this codebase.
+* Test each crud part
+* Understand the strange model.addAttribute in index.
+* Create data persistence with a db (sqlite?)
+
 2. Look through the code and understand it.
 3. Write Notes on improvements. (Remember that they plan to add an endpoint)
 
