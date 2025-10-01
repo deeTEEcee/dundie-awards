@@ -61,6 +61,17 @@
     </div>
 </div>
 
+<div>
+    <p>Organizations</p>
+    <tr th:each="org : ${orgs}">
+        <td th:text="${org.id}"></td>
+        <td th:text="${org.name}"></td>
+        <div th:each="e : ${org.employees}">
+            <p th:text="${e.firstName}"></p>
+        </div>
+    </tr>
+</div>
+
 <!-- Include Bootstrap JS and Popper.js -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

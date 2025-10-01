@@ -38,6 +38,7 @@ Thyme syntax basics;
   </div>
   
 4. @{} - Link expressions allow for more flexible urls (https://www.thymeleaf.org/doc/articles/standardurlsyntax.html)
+5. |${multiple}  ${variables}| - Wrap a string with || in order to combine them as text. Otherwise, it'll be considered code.
 ```
 
 ### Code Improvements

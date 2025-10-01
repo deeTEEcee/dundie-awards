@@ -2,6 +2,7 @@ package com.ninjaone.dundie_awards.controller;
 
 import com.ninjaone.dundie_awards.repository.ActivityRepository;
 import com.ninjaone.dundie_awards.repository.EmployeeRepository;
+import com.ninjaone.dundie_awards.repository.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +20,15 @@ public class IndexController {
     @Autowired
     private ActivityRepository activityRepository;
 
+    // For testing
+    @Autowired
+    private OrganizationRepository orgRepository;
+
     @GetMapping()
     public String getIndex(Model model) {
         model.addAttribute("employees", employeeRepository.findAll());
         model.addAttribute("activities", activityRepository.findAll());
+        model.addAttribute("orgs", orgRepository.findAll());
         return "index";
     }
 }

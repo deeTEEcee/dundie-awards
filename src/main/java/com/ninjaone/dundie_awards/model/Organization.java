@@ -1,6 +1,14 @@
 package com.ninjaone.dundie_awards.model;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "organizations")
@@ -12,6 +20,10 @@ public class Organization {
 
   @Column(name = "name")
   private String name;
+
+  @OneToMany(mappedBy="organization")
+  // TODO: If I remove an employee, do I want to remove employees?
+  private List<Employee> employees;
 
   public Organization() {
 
@@ -37,4 +49,10 @@ public class Organization {
   public void setName(String name) {
     this.name = name;
   }
+
+  public List<Employee> getEmployees() {
+    return employees;
+  }
+
+
 }
