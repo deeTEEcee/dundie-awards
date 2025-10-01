@@ -2,6 +2,7 @@ package com.ninjaone.dundie_awards.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import java.util.List;
 //import jakarta.persistence.Index;
 //import jakarta.persistence.Table;
 
@@ -22,8 +23,8 @@ public class Employee {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "dundie_awards")
-    private Integer dundieAwards;
+    @OneToMany(mappedBy="employee")
+    private List<DundieAward> dundieAwards;
 
     @ManyToOne(optional = false)
     private Organization organization;
@@ -71,11 +72,12 @@ public class Employee {
         this.organization = organization;
     }
 
-    public void setDundieAwards(int dundieAwards){
-        this.dundieAwards = dundieAwards;
+    public void setDundieAwards(List<DundieAward> awards){
+
+        this.dundieAwards = awards;
     }
 
-    public Integer getDundieAwards(){
+    public List<DundieAward> getDundieAwards(){
         return dundieAwards;
     }
 }

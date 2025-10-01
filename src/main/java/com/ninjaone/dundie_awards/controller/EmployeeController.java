@@ -1,6 +1,8 @@
 package com.ninjaone.dundie_awards.controller;
 
 import com.ninjaone.dundie_awards.model.Activity;
+import com.ninjaone.dundie_awards.model.DundieAward;
+import com.ninjaone.dundie_awards.repository.DundieAwardRepository;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +36,9 @@ public class EmployeeController {
   @Autowired
   private ActivityRepository activityRepository;
 
+  @Autowired
+  private DundieAwardRepository awardRepository;
+
   // get all employees
   @GetMapping("/employees")
   @ResponseBody
@@ -57,6 +62,28 @@ public class EmployeeController {
     Optional<Employee> optionalEmployee = employeeRepository.findById(id);
     if (optionalEmployee.isPresent()) {
       return ResponseEntity.ok(optionalEmployee.get());
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @PostMapping("/employees/{id}/assign-award")
+  @ResponseBody
+  public ResponseEntity<Employee> addAward(
+      @PathVariable Long employeeId,
+      @RequestBody Long awardId
+  ) {
+    // Params needed: id, award_id.
+    Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
+    Optional<DundieAward> optionalAward = awardRepository.findById(awardId);
+    if (optionalAward.isEmpty()) {
+      return ResponseEntity.badRequest().build();
+    }
+    if (optionalEmployee.isPresent()) {
+      Employee employee = optionalEmployee.get();
+      employee.getDundieAwards().add(optionalAward.get());
+      employeeRepository.save(employee);
+      return ResponseEntity.ok(employee);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
