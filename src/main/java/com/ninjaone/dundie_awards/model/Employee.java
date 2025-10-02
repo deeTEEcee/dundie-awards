@@ -1,5 +1,7 @@
 package com.ninjaone.dundie_awards.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.util.List;
@@ -24,9 +26,12 @@ public class Employee {
     private String lastName;
 
     @OneToMany(mappedBy="employee")
+    @JsonManagedReference
     private List<DundieAward> dundieAwards;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name="organization_id", nullable=false)
+    @JsonBackReference
     private Organization organization;
 
     public Employee() {

@@ -1,6 +1,7 @@
 package com.ninjaone.dundie_awards.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ public class Organization {
   private String name;
 
   @OneToMany(mappedBy="organization")
+  @JsonManagedReference
   // TODO: If I remove an employee, do I want to remove employees?
   private List<Employee> employees;
 
