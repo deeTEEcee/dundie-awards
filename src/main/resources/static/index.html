@@ -32,7 +32,9 @@
             <tr th:each="employee : ${employees}">
                 <td th:text="${employee.firstName}"></td>
                 <td th:text="${employee.lastName}"></td>
-                <td th:text="${employee.dundieAwards}"></td>
+                <td th:each="award : ${employee.dundieAwards}">
+                    <p th:text="| ${award.name}: ${award.description}|"></p>
+                </td>
                 <td th:text="${employee.organization.id}"></td>
                 <td th:text="${employee.organization.name}"></td>
             </tr>

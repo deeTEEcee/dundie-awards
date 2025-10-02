@@ -26,10 +26,18 @@ public class DundieAward {
   @Column(name = "description", nullable = false)
   private String description;
 
-  @ManyToOne(optional = true) // optional because we will want awards to create but not assign them.
-  @JoinColumn(name="employee_id", nullable=false)
+  @ManyToOne // optional because we will want awards to create but not assign them.
+  @JoinColumn(name="employee_id", nullable=true)
   @JsonBackReference
   private Employee employee;
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
 
   public String getName() {
     return name;
@@ -48,8 +56,8 @@ public class DundieAward {
     this.description = description;
   }
 
-//  public void setDundieAward() {
-//
-//  }
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
+  }
 
 }

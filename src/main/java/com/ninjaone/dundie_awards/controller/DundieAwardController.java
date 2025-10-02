@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("dundie_awards")
+@RequestMapping("awards")
 public class DundieAwardController {
 
   @Autowired

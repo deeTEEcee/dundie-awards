@@ -41,6 +41,22 @@ public class EmployeeController {
   @Autowired
   private DundieAwardRepository awardRepository;
 
+  static class AddAwardParam {
+
+    private long awardId;
+
+//    public AddAwardParam() {}
+
+    public long getAwardId() {
+      return this.awardId;
+    }
+//
+//    public void setAwardId() {
+//      return this.awardId;
+//    }
+
+  }
+
   // get all employees
   @GetMapping("/employees")
   @ResponseBody
@@ -69,22 +85,26 @@ public class EmployeeController {
     }
   }
 
-  @PostMapping("/employees/{id}/assign-award")
+  @PostMapping("/employees/{employeeId}/add-award")
   @ResponseBody
   public ResponseEntity<Employee> addAward(
       @PathVariable Long employeeId,
-      @RequestBody Long awardId
+      @RequestBody AddAwardParam param
   ) {
     // Params needed: id, award_id.
     Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
-    Optional<DundieAward> optionalAward = awardRepository.findById(awardId);
+    Optional<DundieAward> optionalAward = awardRepository.findById(param.getAwardId());
     if (optionalAward.isEmpty()) {
       return ResponseEntity.badRequest().build();
     }
     if (optionalEmployee.isPresent()) {
+      DundieAward award = optionalAward.get();
       Employee employee = optionalEmployee.get();
-      employee.getDundieAwards().add(optionalAward.get());
-      employeeRepository.save(employee);
+      award.setEmployee(employee);
+      awardRepository.save(award);
+//      Employee employee = optionalEmployee.get();
+//      employee.getDundieAwards().add(optionalAward.get());
+//      employeeRepository.save(employee);
       return ResponseEntity.ok(employee);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

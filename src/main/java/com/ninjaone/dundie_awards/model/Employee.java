@@ -25,7 +25,7 @@ public class Employee {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToMany(mappedBy="employee")
+    @OneToMany(mappedBy="employee", cascade={CascadeType.ALL})
     @JsonManagedReference
     private List<DundieAward> dundieAwards;
 
