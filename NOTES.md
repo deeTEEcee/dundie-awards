@@ -1,24 +1,7 @@
-TODO:
-1. Review Spring and this codebase.
-2. Look through the code and understand it.
-3. Write Notes on improvements. (Remember that they plan to add an endpoint)
-
 ### README+Code Notes
-* Missing instructions on how to setup and run the application.
-```
-# https://docs.spring.io/spring-boot/docs/3.2.5/gradle-plugin/reference/htmlsingle/
-./gradlew build
-./gradlew bootRun # Defaults to port 3000. It probably finds main by scanning the application.
-
-OR
-# Example classpath: /Users/deeteecee/Projects/dundie_awards/build/classes/java/main
-java -cp <list of all class paths with colon separation> com.ninjaone.dundie_awards.DundieAwardsApplication 
-
-
-```
-
 * Spring boot: 3.2.0
 * Spring core: 6.1.1
+* Thymeleaf: 3.2.0
 
 Spring components:
 * Controller+RequestMapping
@@ -33,5 +16,53 @@ Spring startup workflow (starts at "DundieAwardsApplication.java")
 * Loads application context and configuration
 * Loads CommandLineRunner (DataLoader)
 
+Thyme syntax basics;
+```
+1. ${variable_name}
+2. #{calendars.format()} - Use for helper functions or 
+
+3. *{firstName} - Uses the currently selected object. If there is none, then it is ${}
+  <div th:object="${session.user}"> // In this context, the selected object is session.user
+    <p>Name: <span th:text="*{firstName}">Sebastian</span>.</p>  // This is the same as ${session.user.firstName}
+    <p>Surname: <span th:text="*{lastName}">Pepper</span>.</p>
+    <p>Nationality: <span th:text="*{nationality}">Saturn</span>.</p>
+  </div>
+  
+4. @{} - Link expressions allow for more flexible urls (https://www.thymeleaf.org/doc/articles/standardurlsyntax.html)
+5. |${multiple}  ${variables}| - Wrap a string with || in order to combine them as text. Otherwise, it'll be considered code.
+```
+
 ### Code Improvements
+* Missing instructions on how to setup or run the application.
+```
+# https://docs.spring.io/spring-boot/docs/3.2.5/gradle-plugin/reference/htmlsingle/
+./gradlew build
+./gradlew bootRun # Defaults to port 3000. It probably finds main by scanning the application.
+
+OR
+# Example classpath: /Users/deeteecee/Projects/dundie_awards/build/classes/java/main
+java -cp <list of all class paths with colon separation> com.ninjaone.dundie_awards.DundieAwardsApplication 
+```
+* Missing instruction on how to develop (but this is an interview)
+
+General stuff:
+* We only have endpoints but no visible control over the models.
+* Error messages are too long, not short and descriptive.
+* Data is not persistent but this is a test application for job candidates.
+* No unit tests
+* Controllers could be mapped better. Both are global root endpoints and not namespaced.
+* Could use JsonProperty to specify custom names that don't directly match the variable name.
+
+Minor:
+* Might be better to import jakarta.persistence.<class name> instead of .*
+
+Model validation:
+* Employee - required fields, requires organization field. Otherwise, it fails on the main page.
+    * When adding employee, validation is too long. It does say the body is missing but the message looks too long and is a "stack trace"
+    * When adding employee, empty json was allowed.
+        * This allows bad data to go through the system which our GET `/employees` fails to handle.
+        * Error message could be be added for this case, telling us a user couldn't be added and why that was the case.
+    * New/Update needs to be handled separately. If we require first and last name during inupt, they shouldn't both be required in update.
+* Activity - ??
+* Organization - ??
 
